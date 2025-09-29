@@ -1,130 +1,37 @@
-<!-- LNC Contact Form (n8n webhook) -->
-<form id="lnc-form" action="https://lncai.app.n8n.cloud/webhook/fb666ad9-e562-4f8c-b74c-67dacea1001a" method="post" novalidate>
-  <div class="form-header">
-    <h1>Supercharged AI Application</h1>
-    <p style="white-space: pre-line">Welcome to LNC, we will be happy to get your submission and reach out to you shortly. </p>
-  </div>
+    <form action="https://lncai.app.n8n.cloud/webhook/fb666ad9-e562-4f8c-b74c-67dacea1001a" method="post">
+      <div class="form-header">
+        <h1>Supercharged AI Application</h1>
+        <p>Welcome to LNC, we will be happy to get your submission and reach out to you shortly.</p>
+      </div>
 
-  <div class="inputs-wrapper">
-    <div class="form-group">
-      <label class="form-label form-required" for="field-0">What is your First name?</label>
-      <input class="form-input form-required" type="text" id="field-0" name="field-0" placeholder="John" required>
-      <p class="error-field-0 error-hidden">This field is required</p>
-    </div>
+      <div class="inputs-wrapper">
+        <div class="form-group">
+          <label class="form-label" for="field-0">What is your First name?</label>
+          <input class="form-input" type="text" id="field-0" name="field-0" placeholder="John" required>
+        </div>
 
-    <div class="form-group">
-      <label class="form-label form-required" for="field-1">What is your Last Name?</label>
-      <input class="form-input form-required" type="text" id="field-1" name="field-1" placeholder="Smith" required>
-      <p class="error-field-1 error-hidden">This field is required</p>
-    </div>
+        <div class="form-group">
+          <label class="form-label" for="field-1">What is your Last Name?</label>
+          <input class="form-input" type="text" id="field-1" name="field-1" placeholder="Smith" required>
+        </div>
 
-    <div class="form-group">
-      <label class="form-label" for="field-2">What is your business name?</label>
-      <input class="form-input" type="text" id="field-2" name="field-2" placeholder="LNC">
-      <p class="error-field-2 error-hidden">This field is required</p>
-    </div>
+        <div class="form-group">
+          <label class="form-label" for="field-2">What is your business name?</label>
+          <input class="form-input" type="text" id="field-2" name="field-2" placeholder="LNC">
+        </div>
 
-    <div class="form-group">
-      <label class="form-label" for="field-3">Explain your business model</label>
-      <input class="form-input" type="text" id="field-3" name="field-3" placeholder="Explain">
-      <p class="error-field-3 error-hidden">This field is required</p>
-    </div>
-  </div>
+        <div class="form-group">
+          <label class="form-label" for="field-3">Explain your business model</label>
+          <input class="form-input" type="text" id="field-3" name="field-3" placeholder="Explain">
+        </div>
+      </div>
 
-  <!-- Simple spam honeypot -->
-  <div style="position:absolute; left:-5000px;" aria-hidden="true">
-    <label for="company">Company</label>
-    <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
-  </div>
-
-  <button id="submit-btn" type="submit">
-    <span>
-      <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-        <path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
-      </svg>
-    </span>
-    Submit
-  </button>
-
-  <!-- Optional success/fail messages (hidden by default) -->
-  <p id="form-success" class="form-note success error-hidden">Thanks! Your submission was received.</p>
-  <p id="form-fail" class="form-note fail error-hidden">Something went wrong. Please try again.</p>
-</form>
-
-<style>
-  /* Minimal styles (safe to paste in WP HTML block or site CSS) */
-  #lnc-form { max-width: 720px; margin: 0 auto; }
-  .form-header h1 { margin: 0 0 .25rem; font-size: 1.75rem; }
-  .form-header p { margin: 0 0 1rem; opacity: .85; }
-  .inputs-wrapper { display: grid; gap: 14px; }
-  .form-group { display: grid; gap: 6px; }
-  .form-label { font-weight: 600; }
-  .form-input {
-    width: 100%; padding: 10px 12px; border: 1px solid #d0d0d0; border-radius: 8px; font-size: 16px;
-  }
-  #submit-btn {
-    display: inline-flex; align-items: center; gap: 8px; margin-top: 12px;
-    padding: 10px 16px; border: 0; border-radius: 10px; cursor: pointer;
-    background: #111; color: #fff; font-weight: 600;
-  }
-  .error-hidden { display: none; }
-  .form-note { margin-top: 10px; }
-  .success { color: #0a8a35; }
-  .fail { color: #b00020; }
-</style>
-
-<script>
-  (function () {
-    const form = document.getElementById('lnc-form');
-    const requiredIds = ['field-0', 'field-1']; // mark required here
-    const successEl = document.getElementById('form-success');
-    const failEl = document.getElementById('form-fail');
-
-    function showError(id, show) {
-      const msg = document.querySelector('.error-' + id);
-      const input = document.getElementById(id);
-      if (!msg) return;
-      msg.classList.toggle('error-hidden', !show);
-      input?.classList.toggle('has-error', show);
-    }
-
-    form.addEventListener('submit', async function (e) {
-      // Honeypot check
-      if (form.company && form.company.value) {
-        e.preventDefault();
-        return;
-      }
-
-      // Client-side validation
-      let hasError = false;
-      requiredIds.forEach(id => {
-        const val = (document.getElementById(id)?.value || '').trim();
-        const show = val.length === 0;
-        showError(id, show);
-        if (show) hasError = true;
-      });
-      if (hasError) {
-        e.preventDefault();
-        return;
-      }
-
-      // Optional: AJAX submit, comment out to use normal POST redirect
-      e.preventDefault();
-      successEl.classList.add('error-hidden');
-      failEl.classList.add('error-hidden');
-
-      try {
-        const formData = new FormData(form);
-        const resp = await fetch(form.action, { method: 'POST', body: formData });
-        if (resp.ok) {
-          form.reset();
-          successEl.classList.remove('error-hidden');
-        } else {
-          failEl.classList.remove('error-hidden');
-        }
-      } catch (err) {
-        failEl.classList.remove('error-hidden');
-      }
-    });
-  })();
-</script>
+      <button id="submit-btn" type="submit">
+        <span aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 512 512">
+            <path d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
+          </svg>
+        </span>
+        Submit
+      </button>
+    </form>
