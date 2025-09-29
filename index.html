@@ -1,28 +1,303 @@
-  <form action="https://lncai.app.n8n.cloud/webhook-test/fb666ad9-e562-4f8c-b74c-67dacea1001a" method="get">
-    <div>
-      <label for="first_name">What is your First name?</label><br>
-      <input id="first_name" name="first_name" type="text" placeholder="John" value="John" required>
-    </div>
-    
-    <div>
-      <label for="business_name">What is your email address</label><br>
-      <input id="email_address" name="Email_Address" type="text" placeholder="user@gmail.com" value="user@gmail.com">
-    </div>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LNC — Inquiry Form</title>
+  <style>
+    :root{
+      --bg: #0b0d12;
+      --card: #12151c;
+      --muted: #8b93a7;
+      --text: #e9eef7;
+      --accent: #6aa1ff;
+      --accent-2:#5ce1b9;
+      --error:#ff6b6b;
+      --ring: 0 0 0 4px rgba(106,161,255,.25);
+      --radius: 14px;
+    }
 
-    <div>
-      <label for="last_name">What is your Last Name?</label><br>
-      <input id="last_name" name="last_name" type="text" placeholder="Smith" value="Smith" required>
-    </div>
+    /* Layout */
+    html, body { height: 100%; }
+    body{
+      margin:0; 
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(92,225,185,.10), transparent 60%),
+        radial-gradient(1000px 500px at 110% 10%, rgba(106,161,255,.10), transparent 60%),
+        var(--bg);
+      display:grid;
+      place-items:center;
+      padding: 24px;
+    }
 
-    <div>
-      <label for="business_name">What is your business name?</label><br>
-      <input id="business_name" name="business_name" type="text" placeholder="LNC" value="Dr Hu Dental">
-    </div>
+    .wrap{
+      width: 100%;
+      max-width: 720px;
+    }
 
-    <div>
-      <label for="business_model">Explain your business model</label><br>
-      <textarea id="business_model" name="business_model" placeholder="Explain" rows="4"> We are a family dental practice</textarea>
-    </div>
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
+      border: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
 
-    <button type="submit">Submit</button>
-  </form>
+    .header{
+      padding: 28px 28px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      background:
+        radial-gradient(600px 160px at -10% -30%, rgba(92,225,185,.12), transparent 60%),
+        radial-gradient(600px 160px at 110% -20%, rgba(106,161,255,.12), transparent 60%),
+        transparent;
+    }
+
+    .title{
+      margin: 0 0 6px;
+      font-size: 24px;
+      letter-spacing: .2px;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    form{
+      padding: 24px 28px 28px;
+    }
+
+    /* Grid */
+    .grid{
+      display:grid;
+      gap:16px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px){
+      .grid.two{ grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Field */
+    .field{
+      display:flex;
+      flex-direction: column;
+      gap:8px;
+    }
+
+    label{
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    input, textarea{
+      color: var(--text);
+      background: #0e1117;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 12px;
+      padding: 14px 13px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease, transform .02s ease;
+    }
+
+    input::placeholder, textarea::placeholder{ color: #6c768d; }
+
+    input:focus, textarea:focus{
+      border-color: var(--accent);
+      box-shadow: var(--ring);
+    }
+
+    textarea{ min-height: 120px; resize: vertical; }
+
+    /* Helper / error */
+    .help{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .error{
+      color: var(--error);
+      font-size: 12px;
+      display:none;
+      margin-top: 4px;
+    }
+
+    /* Actions */
+    .actions{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    button[type="submit"]{
+      appearance:none;
+      border:0;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#0b0d12;
+      font-weight: 700;
+      padding: 14px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform .06s ease, box-shadow .15s ease, filter .15s ease;
+      box-shadow: 0 8px 22px rgba(90, 150, 255, .25);
+    }
+    button[type="submit"]:hover{ filter: brightness(1.05); }
+    button[type="submit"]:active{ transform: translateY(1px); }
+
+    .legal{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* Subtle focus-visible for keyboard users */
+    *:focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Hide the honeypot from humans */
+    .honeypot{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <h1 class="title">Supercharged AI Application</h1>
+        <p class="subtitle">Welcome to LNC — we’ll be happy to get your submission and reach out shortly.</p>
+      </div>
+
+      <!-- Keep your field names; switched email to type="email" for validation -->
+      <form
+        action="https://lncai.app.n8n.cloud/webhook-test/fb666ad9-e562-4f8c-b74c-67dacea1001a"
+        method="get"
+        novalidate
+        id="lnc-form"
+      >
+        <!-- Honeypot (basic bot mitigation) -->
+        <div aria-hidden="true" class="honeypot">
+          <label>Leave this field empty
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="grid two">
+          <div class="field">
+            <label for="first_name">What is your first name?</label>
+            <input id="first_name" name="first_name" type="text" placeholder="John" autocomplete="given-name" required />
+            <div class="error" data-for="first_name">Please enter your first name.</div>
+          </div>
+
+          <div class="field">
+            <label for="last_name">What is your last name?</label>
+            <input id="last_name" name="last_name" type="text" placeholder="Smith" autocomplete="family-name" required />
+            <div class="error" data-for="last_name">Please enter your last name.</div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="email_address">What is your email address?</label>
+            <input id="email_address" name="Email_Address" type="email" placeholder="user@gmail.com" autocomplete="email" required />
+            <div class="help">We’ll only use this to follow up on your request.</div>
+            <div class="error" data-for="email_address">Please enter a valid email address.</div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="business_name">What is your business name?</label>
+            <input id="business_name" name="business_name" type="text" placeholder="LNC" autocomplete="organization" />
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="business_model">Explain your business model</label>
+            <textarea id="business_model" name="business_model" placeholder="Tell us what you do, who you serve, and the outcomes you deliver." rows="5"></textarea>
+            <div class="help">Example: “We are a family dental practice focused on preventative care and Invisalign.”</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <span class="legal">By submitting, you agree to be contacted about your inquiry.</span>
+          <button type="submit" id="submitBtn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Lightweight client-side validation & UX polish
+    (function () {
+      const form = document.getElementById('lnc-form');
+      const email = document.getElementById('email_address');
+      const first = document.getElementById('first_name');
+      const last = document.getElementById('last_name');
+      const submitBtn = document.getElementById('submitBtn');
+
+      function showError(input, message){
+        const id = input.getAttribute('id');
+        const el = form.querySelector('.error[data-for="'+id+'"]');
+        if(el){ el.textContent = message; el.style.display = 'block'; }
+        input.setAttribute('aria-invalid','true');
+      }
+      function clearError(input){
+        const id = input.getAttribute('id');
+        const el = form.querySelector('.error[data-for="'+id+'"]');
+        if(el){ el.style.display = 'none'; }
+        input.removeAttribute('aria-invalid');
+      }
+
+      function isValidEmail(value){
+        // Simple RFC5322-ish check; rely on browser too
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+
+      [first, last, email].forEach(input=>{
+        input.addEventListener('input', ()=>{
+          clearError(input);
+        });
+      });
+
+      form.addEventListener('submit', function(e){
+        let ok = true;
+
+        if(!first.value.trim()){
+          showError(first, 'Please enter your first name.');
+          ok = false;
+        }
+        if(!last.value.trim()){
+          showError(last, 'Please enter your last name.');
+          ok = false;
+        }
+        if(!email.value.trim() || !isValidEmail(email.value.trim())){
+          showError(email, 'Please enter a valid email address.');
+          ok = false;
+        }
+
+        // Honeypot check
+        const hp = form.querySelector('input[name="website"]');
+        if(hp && hp.value){
+          // likely a bot submission; block
+          ok = false;
+        }
+
+        if(!ok){
+          e.preventDefault();
+          return;
+        }
+
+        // Subtle disabled state to avoid double submits on slow networks
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting…';
+      });
+    })();
+  </script>
+</body>
+</html>
